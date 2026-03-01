@@ -1,5 +1,6 @@
 /**
- * Single product row: catalog select, local price display, remove button.
+ * Single product row: catalog select, local price display.
+ * Products can be added but not removed per acceptance criteria.
  */
 export function ProductRow({
   product,
@@ -8,8 +9,6 @@ export function ProductRow({
   priceCurrency,
   exchangeRate,
   onSelectFromCatalog,
-  onRemove,
-  canRemove = true,
 }) {
   const currentInCatalog = catalogOptions.some((c) => c.id === product.productId)
   const options =
@@ -61,14 +60,6 @@ export function ProductRow({
           aria-label="Local price (exchange rate × USD price)"
         />
       </label>
-      <button
-        type="button"
-        onClick={() => onRemove(index)}
-        className="btn-danger"
-        disabled={!canRemove}
-      >
-        Remove
-      </button>
     </div>
   )
 }

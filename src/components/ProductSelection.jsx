@@ -11,7 +11,6 @@ export function ProductSelection({
   catalogLoading = false,
   catalogError = null,
   onAddProduct,
-  onRemoveProduct,
   onSelectFromCatalog,
 }) {
   return (
@@ -36,8 +35,6 @@ export function ProductSelection({
           priceCurrency={priceCurrency}
           exchangeRate={exchangeRate}
           onSelectFromCatalog={onSelectFromCatalog}
-          onRemove={onRemoveProduct}
-          canRemove={products.length > 1}
         />
       ))}
       {catalogLoading && catalog.length === 0 && (

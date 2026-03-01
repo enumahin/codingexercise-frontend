@@ -118,10 +118,6 @@ export function PackageForm({ package: editPackage, onSuccess, onCancel }) {
     setProducts((prev) => [...prev, emptyProduct()])
   }
 
-  const removeProduct = (index) => {
-    setProducts((prev) => prev.filter((_, i) => i !== index))
-  }
-
   const selectProductFromCatalog = (index, product) => {
     if (!product?.id) return
     setProducts((prev) => {
@@ -236,7 +232,6 @@ export function PackageForm({ package: editPackage, onSuccess, onCancel }) {
         catalogLoading={productsCatalogLoading}
         catalogError={productsCatalogError}
         onAddProduct={addProduct}
-        onRemoveProduct={removeProduct}
         onSelectFromCatalog={selectProductFromCatalog}
       />
 
