@@ -26,17 +26,23 @@ export function ProductSelection({
           {catalogError}
         </p>
       )}
-      {products.map((p, i) => (
-        <ProductRow
-          key={i}
-          product={p}
-          index={i}
-          catalogOptions={catalog}
-          priceCurrency={priceCurrency}
-          exchangeRate={exchangeRate}
-          onSelectFromCatalog={onSelectFromCatalog}
-        />
-      ))}
+      {products.map((p, i) => {
+        const selectedInOtherRows = products
+          .map((pr) => pr.productId)
+          .filter((id, idx) => id && idx !== i)
+        return (
+          <ProductRow
+            key={i}
+            product={p}
+            index={i}
+            catalogOptions={catalog}
+            selectedProductIdsInOtherRows={selectedInOtherRows}
+            priceCurrency={priceCurrency}
+            exchangeRate={exchangeRate}
+            onSelectFromCatalog={onSelectFromCatalog}
+          />
+        )
+      })}
       {catalogLoading && catalog.length === 0 && (
         <p className="muted">Loading products…</p>
       )}

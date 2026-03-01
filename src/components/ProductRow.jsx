@@ -1,17 +1,20 @@
 /**
  * Single product row: catalog select, local price display.
  * Products can be added but not removed per acceptance criteria.
+ * Already-selected product IDs (in other rows) are excluded from the dropdown to prevent duplicates.
  */
 export function ProductRow({
   product,
   index,
   catalogOptions = [],
+  selectedProductIdsInOtherRows = [],
   priceCurrency,
   exchangeRate,
   onSelectFromCatalog,
 }) {
+  const selectedSet = new Set(selectedProductIdsInOtherRows)
   const currentInCatalog = catalogOptions.some((c) => c.id === product.productId)
-  const options =
+  let options =
     currentInCatalog || !product.productId
       ? catalogOptions
       : [
@@ -22,6 +25,8 @@ export function ProductRow({
           },
           ...catalogOptions,
         ]
+  // Exclude products already selected in other rows (no duplicates)
+  options = options.filter((c) => !selectedSet.has(c.id) || c.id === product.productId)
   const localPrice = ((Number(exchangeRate) || 1) * (Number(product.usdPrice) || 0)).toFixed(2)
 
   return (
