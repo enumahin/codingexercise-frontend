@@ -4,14 +4,16 @@ import axios from 'axios'
 // Backend has CORS for http://localhost:5173 when using direct URL (see SecurityConfig).
 const API_BASE = import.meta.env.VITE_API_URL ?? '/api'
 
-// When using proxy (/api), auth is added by Vite. When using direct URL, send Basic auth.
+// When using proxy (/api), auth is added by Vite. When using direct URL, send Basic auth from env.
 const isProxied = API_BASE === '/api'
+const apiUsername = import.meta.env.VITE_API_USERNAME || 'user'
+const apiPassword = import.meta.env.VITE_API_PASSWORD || 'pass'
 export const apiClient = axios.create({
   baseURL: API_BASE,
   headers: {
     'Content-Type': 'application/json',
   },
-  ...(isProxied ? {} : { auth: { username: 'user', password: 'pass' } }),
+  ...(isProxied ? {} : { auth: { username: apiUsername, password: apiPassword } }),
 })
 
 export async function getPackages(includeVoided = false) {

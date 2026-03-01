@@ -3,8 +3,9 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  // Load env (like mynebofrontend) so VITE_API_URL etc. are available
-  loadEnv(mode, process.cwd(), '')
+  const env = loadEnv(mode, process.cwd(), '')
+  const apiUser = env.VITE_API_USERNAME || 'user'
+  const apiPass = env.VITE_API_PASSWORD || 'pass'
 
   return {
     plugins: [react()],
@@ -19,7 +20,7 @@ export default defineConfig(({ mode }) => {
             changeOrigin: true,
             secure: false,
             rewrite: (path) => path.replace(/^\/api/, ''),
-            auth: 'user:pass',
+            auth: `${apiUser}:${apiPass}`,
           },
         },
       }),
